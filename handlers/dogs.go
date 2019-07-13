@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/mattrout92/agility-backend/logger"
@@ -60,7 +61,7 @@ func (svc *Service) GetDogs(w http.ResponseWriter, req *http.Request) {
 
 	for rows.Next() {
 		var item AddDogInput
-		rows.Scan(&item.Name, &item.Height, &item.Grade, &item.Handler, &item.UserID)
+		rows.Scan(&item.ID, &item.Name, &item.Height, &item.Grade, &item.Handler, &item.UserID)
 
 		data = append(data, item)
 	}
@@ -72,18 +73,14 @@ func (svc *Service) GetDogs(w http.ResponseWriter, req *http.Request) {
 func (svc *Service) DeleteDog(w http.ResponseWriter, req *http.Request) {
 	var input AddDogInput
 
-	if err := json.NewDecoder(req.Body).Decode(&input); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		logger.Error(err)
-		return
-	}
-	defer req.Body.Close()
+	id := req.URL.Query().Get("id")
 
 	db := svc.Store.SQLX()
 
-	info, err := db.Exec(svc.Store.GetQuery("DeleteDog"), input.ID)
+	info, err := db.Exec(svc.Store.GetQuery("DeleteDog"), id)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Println(2)
 		logger.Error(err)
 		return
 	}

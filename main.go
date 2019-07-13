@@ -4,8 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/memory-com/memory_functions/cors"
-
+	"github.com/mattrout92/agility-backend/cors"
 	"github.com/mattrout92/agility-backend/handlers"
 
 	"github.com/mattrout92/agility-backend/store"
