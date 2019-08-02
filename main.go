@@ -24,6 +24,7 @@ func main() {
 	r.Path("/login").Methods("POST", "OPTIONS").Handler(cors.Middleware(logger.Handler(http.HandlerFunc(svc.Login))))
 	r.Path("/dogs").Methods("POST", "OPTIONS").Handler(cors.Middleware(logger.Handler(http.HandlerFunc(svc.AddDog))))
 	r.Path("/dogs").Methods("GET", "OPTIONS").Handler(cors.Middleware(logger.Handler(http.HandlerFunc(svc.GetDogs))))
+	r.Path("/shows").Methods("GET", "OPTIONS").Handler(cors.Middleware(logger.Handler(http.HandlerFunc(svc.GetShows))))
 	r.Path("/dogs").Methods("DELETE", "OPTIONS").Handler(cors.Middleware(logger.Handler(http.HandlerFunc(svc.DeleteDog))))
 	r.Path("/dogs").Methods("PUT", "OPTIONS").Handler(cors.Middleware(logger.Handler(http.HandlerFunc(svc.UpdateDog))))
 
